@@ -2,6 +2,7 @@ package com.studyCycle.StudyCycle.Controller;
 
 
 import com.studyCycle.StudyCycle.Payload.PasswordResetRequest;
+import com.studyCycle.StudyCycle.Payload.SearchResponse;
 import com.studyCycle.StudyCycle.Payload.UpdatePasswordRequest;
 import com.studyCycle.StudyCycle.Payload.VerifyResetCodeRequest;
 import com.studyCycle.StudyCycle.Service.UserService;
@@ -61,4 +62,8 @@ public class UserController {
         return userService.resetPassword(email, resetCode, newPassword);
     }
 
+    @GetMapping("/search")
+    public SearchResponse search(@RequestParam String match ){
+       return userService.filter(match);
+    }
 }
