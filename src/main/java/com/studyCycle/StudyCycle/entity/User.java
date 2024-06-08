@@ -1,50 +1,41 @@
 package com.studyCycle.StudyCycle.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity
-public class User {
+public class User  implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
-    private String phoneNumber;
-    private String fullName;
-    private String password;
-
-
-
+    private String fullName; // Changed from userFirstName
+    private String phoneNumber; // Changed from userLastName
+    private String password; // Changed from userPassword
     private String verificationCode;
-
     private String resetCode;
     private boolean verified;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLE",
+            joinColumns = {
+                    @JoinColumn(name = "USER_ID", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "ROLE_ID")
+            }
+    )
+    private Set<Role> role;
 
-    public User(Long id, String email, String phoneNumber, String fullName, String password, String verificationCode, String resetCode, boolean verified) {
-        this.id = id;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.fullName = fullName;
-        this.password = password;
-        this.verificationCode = verificationCode;
-        this.resetCode = resetCode;
-        this.verified = verified;
+    public User(String string, Object object, String fullName2, String password2) {
+        // TODO Auto-generated constructor stub
     }
 
     public User() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        // TODO Auto-generated constructor stub
     }
 
     public String getEmail() {
@@ -55,20 +46,20 @@ public class User {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getFullName() {
         return fullName;
     }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {
@@ -79,6 +70,14 @@ public class User {
         this.password = password;
     }
 
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
+    }
+
     public String getVerificationCode() {
         return verificationCode;
     }
@@ -86,6 +85,7 @@ public class User {
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
     }
+
     public String getResetCode() {
         return resetCode;
     }
@@ -102,7 +102,4 @@ public class User {
         this.verified = verified;
     }
 
-//    public void setResetCode(String resetCode) {
-//        this.resetCode=resetCode;
-//    }
 }

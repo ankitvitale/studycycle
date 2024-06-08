@@ -9,27 +9,42 @@ import com.studyCycle.StudyCycle.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
+
 @RestController
-@RequestMapping("/api/users")
+//@RequestMapping("/api/users")
 public class UserController {
+
 
     @Autowired
     private UserService userService;
 
+    @PostConstruct
+    public void initRoleAndUser() {
+        userService.initRoleAndUser();
+    }
+
+
     @PostMapping("/register")
-    public User register(@RequestParam String email, @RequestParam String phoneNumber) {
-        return userService.registerUser(email, phoneNumber);
+    public User register(@RequestParam String email) {
+        if(email.contains("@")) {
+            return userService.registerUser(email);
+
+        }
+        return null;
     }
 
     @PostMapping("/verify")
-    public boolean verify(@RequestParam String verificationCode) {
+    public String verify(@RequestParam String verificationCode) {
         return userService.verifyUser(verificationCode);
     }
 
+
     @PostMapping("/complete-profile")
-    public User completeProfile(@RequestParam Long userId, @RequestParam String fullName, @RequestParam String password) {
-        return userService.completeProfile(userId, fullName, password);
+    public User completeProfile( @RequestParam String email,@RequestParam String fullName, @RequestParam String password) {
+        return userService.completeProfile(email,fullName, password);
     }
+
 
     @PostMapping("/request-password-reset")
     public boolean requestPasswordReset(@RequestParam String email) {
@@ -45,4 +60,5 @@ public class UserController {
     public boolean resetPassword(@RequestParam String email, @RequestParam String resetCode, @RequestParam String newPassword) {
         return userService.resetPassword(email, resetCode, newPassword);
     }
+
 }
