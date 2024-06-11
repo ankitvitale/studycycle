@@ -4,17 +4,19 @@ import com.studyCycle.StudyCycle.Payload.ProductRequest;
 import com.studyCycle.StudyCycle.Service.DonationService;
 import com.studyCycle.StudyCycle.entity.Donate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class DonationController {
 
     @Autowired
     private DonationService donationService;
     @PostMapping("/addDonationProduct")
+    @PreAuthorize("hasRole('User')")
     public void addDonationProduct(@RequestBody ProductRequest productRequest) {
          donationService.addDonationProduct(productRequest);
     }

@@ -15,6 +15,9 @@ public class User  implements Serializable {
     private String fullName; // Changed from userFirstName
     private String phoneNumber; // Changed from userLastName
     private String password; // Changed from userPassword
+
+    private String address;
+    private String usertype;
     private String verificationCode;
     private String resetCode;
     private boolean verified;
@@ -68,6 +71,22 @@ public class User  implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
     }
 
     public Set<Role> getRole() {

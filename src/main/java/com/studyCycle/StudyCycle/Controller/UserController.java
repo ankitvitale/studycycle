@@ -37,8 +37,8 @@ public class UserController {
 
 
     @PostMapping("/complete-profile")
-    public User completeProfile( @RequestParam String email,@RequestParam String fullName, @RequestParam String password) {
-        return userService.completeProfile(email,fullName, password);
+    public User completeProfile( @RequestParam String phoneNumber,@RequestParam String email,@RequestParam String fullName, @RequestParam String password,@RequestParam String address,@RequestParam String usertype) {
+        return userService.completeProfile(email,fullName, password,address,usertype,phoneNumber);
     }
 
 

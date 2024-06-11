@@ -7,5 +7,6 @@ public class ProductRequest {
     public String prod_name;
     public String description;
     public String prod_image;
+
     public String category;
 }

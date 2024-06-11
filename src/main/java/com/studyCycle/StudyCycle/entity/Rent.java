@@ -10,11 +10,11 @@ public class Rent {
 
     @ManyToOne
     @JoinColumn(name = "owner", referencedColumnName = "id")
-    private User user;
+    private User owner;
 
     @ManyToOne
     @JoinColumn(name = "tenant", referencedColumnName = "id")
-    private User user1;
+    private User tenant;
     @OneToOne
     private Product product;
     private Double rent_per_day;
@@ -22,21 +22,24 @@ public class Rent {
     private Double deposit_money;
     private Double due_per_day;
     private Date product_adding;
-    private  Date product_renting;
+    private Date product_renting;
     private String status;
 
     public Rent() {
     }
-    public Rent(User owner, Product product, Double rent_per_day, int availability, Double deposit_money, Double due_per_day, Date product_adding, String status) {
-        this.user = owner;
+
+    public Rent(User user, Product product, Double rentPerDay, int availability, Double depositMoney, Double duePerDay, Date date, String available)  {
+        this.owner = user;
         this.product = product;
-        this.rent_per_day = rent_per_day;
+        this.rent_per_day = rentPerDay;
         this.availability = availability;
-        this.deposit_money = deposit_money;
-        this.due_per_day = due_per_day;
-        this.product_adding = product_adding;
-        this.status = status;
+        this.deposit_money = depositMoney;
+        this.due_per_day = duePerDay;
+        this.product_adding = date;
+        this.status = available;
     }
+
+
 
     public Long getRent_prod_id() {
         return rent_prod_id;
@@ -46,20 +49,20 @@ public class Rent {
         this.rent_prod_id = rent_prod_id;
     }
 
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
-    public User getUser1() {
-        return user1;
+    public User getTenant() {
+        return tenant;
     }
 
-    public void setUser1(User user1) {
-        this.user1 = user1;
+    public void setTenant(User tenant) {
+        this.tenant = tenant;
     }
 
     public Product getProduct() {
@@ -121,8 +124,8 @@ public class Rent {
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
-
 }

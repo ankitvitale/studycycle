@@ -10,16 +10,18 @@ public class Product {
     private String prod_name;
     private String description;
     private String prod_image;
+
     @ManyToOne
     private Category category;
 
     public Product() {
     }
 
-    public Product(String prod_name, String description, String prod_image, Category category) {
+    public Product(String prod_name, String description, String prod_image,Category category) {
         this.prod_name = prod_name;
         this.description = description;
         this.prod_image = prod_image;
+
         this.category = category;
     }
 
@@ -47,6 +49,8 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 
     public String getProd_image() {
         return prod_image;

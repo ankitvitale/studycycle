@@ -45,7 +45,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                                 "/register",
                                 "/complete-profile",
                                 "/login",
+                                "/getAvailableRentals",
+                                "/getSellProducts",
                                 "/registerNewUser",
+                               "/getOldSellProducts",
+                                "/getNewSellProducts",
                                 "/registerAdmin","/request-password-reset","/verify-reset-code","/reset-password").permitAll()
                         .antMatchers(HttpHeaders.ALLOW).permitAll()
                         .anyRequest().authenticated())
