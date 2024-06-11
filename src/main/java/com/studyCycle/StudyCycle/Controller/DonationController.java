@@ -1,10 +1,8 @@
 package com.studyCycle.StudyCycle.Controller;
 
 import com.studyCycle.StudyCycle.Payload.ProductRequest;
-import com.studyCycle.StudyCycle.Payload.RentProductRequest;
 import com.studyCycle.StudyCycle.Service.DonationService;
 import com.studyCycle.StudyCycle.entity.Donate;
-import com.studyCycle.StudyCycle.entity.Rent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

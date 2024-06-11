@@ -4,12 +4,11 @@ import com.studyCycle.StudyCycle.Payload.SellProductRequest;
 import com.studyCycle.StudyCycle.Service.SellService;
 import com.studyCycle.StudyCycle.entity.Sell;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class SellController {
 
     @Autowired
@@ -28,8 +27,13 @@ public class SellController {
         return sellService.deleteSellProduct(id);
     }
 
-    @GetMapping("/getSellProducts")
-    public List<Sell> getSellProducts(){
-        return  sellService.getSellProducts();
+    @GetMapping("/getNewSellProducts")
+    public List<Sell> getNewSellProducts(){
+        return  sellService.getNewSellProducts();
+    }
+
+    @GetMapping("/getOldSellProducts")
+    public List<Sell> getOldSellProducts(){
+        return  sellService.getOldSellProducts();
     }
 }

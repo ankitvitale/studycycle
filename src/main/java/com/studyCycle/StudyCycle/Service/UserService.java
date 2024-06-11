@@ -31,9 +31,6 @@ public class UserService {
     @Autowired
     private DonationService donationService;
 
-
-   // HashMap<String, String> verifyOtp = new HashMap<>();
-
     public void initRoleAndUser() {
         Role adminRole = new Role();
         adminRole.setRoleName("Admin");
@@ -167,6 +164,6 @@ public class UserService {
 
 
     public SearchResponse filter(String match) {
-       return new SearchResponse(rentService.findMatching(match),sellService.findMatching(match),donationService.findMatching(match));
+       return new SearchResponse(rentService.findMatching(match),sellService.findNewMatching(match),sellService.findOldMatching(match),donationService.findMatching(match));
     }
 }

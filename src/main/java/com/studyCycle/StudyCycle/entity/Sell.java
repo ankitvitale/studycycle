@@ -8,10 +8,11 @@ public class Sell {
     public Sell() {
     }
 
-    public Sell(Product product, User user, Double cost) {
+    public Sell(Product product, User user, Double cost, String type) {
         this.product = product;
         this.user = user;
         this.cost = cost;
+        this.type = type;
     }
 
     @Id
@@ -23,6 +24,16 @@ public class Sell {
     @ManyToOne
     private User user;
     private Double cost;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    private String type;
 
     public void setSell_id(Long sell_id) {
         this.sell_id = sell_id;

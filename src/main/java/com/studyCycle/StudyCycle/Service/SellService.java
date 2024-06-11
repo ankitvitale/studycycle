@@ -25,7 +25,8 @@ public class SellService {
         //String currentUser = JwtRequestFilter.CURRENT_USER;
         sellRepository.save(new Sell(productService.addProduct(sellproductRequest.product),
                                         userService.findUser(JwtRequestFilter.CURRENT_USER),
-                                        sellproductRequest.cost));
+                                        sellproductRequest.cost,
+                                        sellproductRequest.type));
     }
 
     public void updateSellProduct(Long id, SellProductRequest sellproductRequest) {
@@ -33,7 +34,9 @@ public class SellService {
         if(sell.isPresent()){
             Sell sellprod= sell.get();
             sellprod.setProduct(productService.updateProduct(sellprod.getProduct().getId(),sellproductRequest.product));
-           sellRepository.save(sellprod);
+            sellprod.setCost(sellproductRequest.cost);
+            sellprod.setType(sellproductRequest.type);
+            sellRepository.save(sellprod);
         }
     }
 
@@ -42,11 +45,18 @@ public class SellService {
         sell.ifPresent(value -> sellRepository.delete(value));
         return "removed";
     }
-    public List<Sell> getSellProducts() {
-       return sellRepository.findAll();
+    public List<Sell> getNewSellProducts() {
+       return sellRepository.findAllByType("New");
     }
 
-    public List<Sell> findMatching(String match) {
-        return sellRepository.findMatching(match);
+    public List<Sell> getOldSellProducts() {
+        return sellRepository.findAllByType("Used");
+    }
+
+    public List<Sell> findNewMatching(String match) {
+        return sellRepository.findNewMatching(match);
+    }
+    public List<Sell> findOldMatching(String match) {
+        return sellRepository.findOldMatching(match);
     }
 }

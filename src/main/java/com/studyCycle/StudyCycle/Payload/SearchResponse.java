@@ -10,15 +10,15 @@ import java.util.List;
 
 public class SearchResponse {
     public List<Rent> rentProd;
-
-    public List<Sell> sellProd;
-
+    public List<Sell> newSellProd;
+    public List<Sell> oldSellProd;
     public List<Donate> donationProd;
 
-
-    public SearchResponse(List<Rent> rentProd, List<Sell> sellProd, List<Donate> donationProd) {
+    public SearchResponse(List<Rent> rentProd, List<Sell> newSellProd, List<Sell> oldSellProd, List<Donate> donationProd) {
         this.rentProd = rentProd;
-        this.sellProd = sellProd;
+        this.newSellProd = newSellProd;
+        this.oldSellProd = oldSellProd;
         this.donationProd = donationProd;
     }
+
 }
