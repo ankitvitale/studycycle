@@ -25,6 +25,7 @@ public class Sell {
     private User user;
     private Double cost;
 
+    private String type;
     public String getType() {
         return type;
     }
@@ -32,8 +33,6 @@ public class Sell {
     public void setType(String type) {
         this.type = type;
     }
-
-    private String type;
 
     public void setSell_id(Long sell_id) {
         this.sell_id = sell_id;

@@ -2,13 +2,18 @@ package com.studyCycle.StudyCycle.Service;
 
 import com.studyCycle.StudyCycle.Payload.SearchResponse;
 import com.studyCycle.StudyCycle.Repository.RoleRepository;
+import com.studyCycle.StudyCycle.Repository.ShopkeeperRepository;
 import com.studyCycle.StudyCycle.Repository.UserRepository;
 import com.studyCycle.StudyCycle.entity.Role;
+import com.studyCycle.StudyCycle.entity.Shopkeeper;
 import com.studyCycle.StudyCycle.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Random;
@@ -20,6 +25,8 @@ public class UserService {
     private UserRepository userDao;
     @Autowired
     private RoleRepository roleDao;
+    @Autowired
+    private ShopkeeperRepository shopkeeperRepository;
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -103,7 +110,13 @@ public class UserService {
             Set<Role> userRoles = new HashSet<>();
             userRoles.add(role);
             user.setRole(userRoles);
-            return userDao.save(user);
+            userDao.save(user);
+            //check
+            if(usertype.equals("Shopkeeper")){
+                Shopkeeper shopkeeper= new Shopkeeper(user, Date.valueOf(LocalDate.now()),Date.valueOf(LocalDate.now().plusMonths(3)));
+                shopkeeperRepository.save(shopkeeper);
+            }
+            return user;
         }
         return null;
     }
