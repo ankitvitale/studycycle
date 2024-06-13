@@ -134,6 +134,10 @@ public class JwtService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(
                     user.getEmail(),
                     user.getPassword(), // Changed from userPassword
+                    user.isVerified(), // Check if the user is enabled
+                    true, // accountNonExpired
+                    true, // credentialsNonExpired
+                    true, // accountNonLocked
                     getAuthority(user)
             );
         } else {
