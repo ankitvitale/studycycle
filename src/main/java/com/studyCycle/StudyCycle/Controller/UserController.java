@@ -61,20 +61,7 @@ public class UserController {
     public SearchResponse search(@RequestParam String match ){
        return userService.filter(match);
     }
-    @PostMapping("/admin/block/{id}")
-    public void blockUser(@PathVariable Long id) {
-        userService.blockUser(id);
-    }
 
-    @PostMapping("/admin/unblock/{id}")
-    public void unBlockUser(@PathVariable Long id) {
-        userService.unBlockUser(id);
-    }
-
-    @PutMapping("/admin/pushDueDate")
-    public void pushDueDate(@PathVariable Long id) {
-        userService.pushDueDate(id);
-    }
 //    @PostMapping("/banner")
 //    public void Banner(@RequestParam )
 }

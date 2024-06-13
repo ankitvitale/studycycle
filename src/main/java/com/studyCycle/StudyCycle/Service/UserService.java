@@ -16,10 +16,7 @@ import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -39,6 +36,10 @@ public class UserService {
     private SellService sellService;
     @Autowired
     private DonationService donationService;
+
+    public List<User> getBlockList() {
+        return userDao.findUnverifiedUsers();
+    }
 
     public void initRoleAndUser() {
         Role adminRole = new Role();
@@ -186,34 +187,4 @@ public class UserService {
         return new SearchResponse(rentService.findMatching(match), sellService.findNewMatching(match), sellService.findOldMatching(match), donationService.findMatching(match));
     }
 
-    @Transactional
-    public void blockUser(Long username) {
-        Optional<User> user = userDao.findById(username);
-        if (user.isPresent()) {
-            User user1 = user.get();
-            user1.setVerified(false);
-            userDao.save(user1);
-        }
-    }
-
-    public void unBlockUser(Long id) {
-        Optional<User> user = userDao.findById(id);
-        if (user.isPresent()) {
-            User user1 = user.get();
-            user1.setVerified(true);
-            userDao.save(user1);
-        }
-    }
-//check
-    public void pushDueDate(Long id) {
-        Optional<User> user = userDao.findById(id);
-        if(user.isPresent()){
-            Optional<Shopkeeper> entity = shopkeeperRepository.findByUser(user.get());
-            if(entity.isPresent()){
-                Shopkeeper shopkeeper= entity.get();
-                shopkeeper.setDue_date(Date.valueOf(LocalDate.now().plusMonths(1)));
-                shopkeeperRepository.save(shopkeeper);
-            }
-        }
-    }
 }
