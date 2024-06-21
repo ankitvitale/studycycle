@@ -74,9 +74,9 @@ public class AdminService {
         }
     }
 
-    public Category createNewCategory(String category) {
-        return categoryService.createNewCategory(category);
-    }
+//    public Category createNewCategory(String category) {
+//        return categoryService.createNewCategory(category);
+//    }
 
     public List<Category> getCategory() {
         return categoryService.getCategory();

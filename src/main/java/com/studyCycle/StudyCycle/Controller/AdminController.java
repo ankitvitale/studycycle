@@ -1,20 +1,28 @@
 package com.studyCycle.StudyCycle.Controller;
 
+import com.studyCycle.StudyCycle.Repository.CategoryRepository;
 import com.studyCycle.StudyCycle.Service.AdminService;
+import com.studyCycle.StudyCycle.Service.CategoryService;
 import com.studyCycle.StudyCycle.entity.Category;
 import com.studyCycle.StudyCycle.entity.Donate;
 import com.studyCycle.StudyCycle.entity.Shopkeeper;
 import com.studyCycle.StudyCycle.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController("/admin/")
 @PreAuthorize("hasRole('Admin')")
 public class AdminController {
-
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryService categoryService;
     @Autowired
     private AdminService adminService;
     @GetMapping("/user")
@@ -51,6 +59,23 @@ public class AdminController {
 //        adminService.createNewCategory(category);
 //    }
 //
+
+    @PostMapping("/addNewCategory")
+
+    @PreAuthorize("hasRole('User')")
+    public ResponseEntity<Category> addCategory(@RequestParam("category") String categoryName,
+                                                @RequestParam("image") MultipartFile image) {
+        try {
+            String imageUrl = categoryService.uploadFile(image);
+            Category category = new Category();
+            category.setCategoryName(categoryName);
+            category.setImageUrl(imageUrl);
+            categoryRepository.save(category);
+            return ResponseEntity.ok(category);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
     @GetMapping("/category")
     public List<Category> getCategory() {
         return adminService.getCategory();
