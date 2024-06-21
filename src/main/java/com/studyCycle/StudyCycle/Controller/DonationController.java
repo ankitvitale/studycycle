@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -17,12 +18,12 @@ public class DonationController {
     private DonationService donationService;
     @PostMapping("/addDonationProduct")
     @PreAuthorize("hasRole('User')")
-    public void addDonationProduct(@RequestBody ProductRequest productRequest) {
+    public void addDonationProduct(@RequestBody ProductRequest productRequest) throws IOException {
          donationService.addDonationProduct(productRequest);
     }
 
     @PostMapping("/updateDonationProduct/{id}")
-    public void updateDonationProduct(@PathVariable("id") Long id,@RequestBody ProductRequest productRequest) {
+    public void updateDonationProduct(@PathVariable("id") Long id,@RequestBody ProductRequest productRequest) throws IOException {
         donationService.updateDonationProduct(id,productRequest);
     }
     @DeleteMapping("/deleteDonationProduct/{id}")

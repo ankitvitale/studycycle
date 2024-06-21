@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,12 +17,12 @@ public class RentController {
     private RentService rentService;
     @PostMapping("/addRentProduct")
     @PreAuthorize("hasRole('User')")
-    public String addRentProduct(@RequestBody RentProductRequest rentProductRequest) {
+    public String addRentProduct(@RequestBody RentProductRequest rentProductRequest) throws IOException {
         return rentService.addRentProduct(rentProductRequest);
     }
 
     @PutMapping("/updateRentProduct/{id}")
-    public String updateRentProduct(@PathVariable("id") Long id,@RequestBody RentProductRequest rentProductRequest) {
+    public String updateRentProduct(@PathVariable("id") Long id,@RequestBody RentProductRequest rentProductRequest) throws IOException {
         return rentService.updateRentProduct(id, rentProductRequest);
     }
     @DeleteMapping("/deleteRentProduct/{id}")

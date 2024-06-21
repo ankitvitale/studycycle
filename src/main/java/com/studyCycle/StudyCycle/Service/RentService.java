@@ -8,6 +8,7 @@ import com.studyCycle.StudyCycle.entity.Rent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -25,7 +26,7 @@ public class RentService {
     @Autowired
     private UserService userService;
 
-    public String addRentProduct(RentProductRequest rentProductRequest) {
+    public String addRentProduct(RentProductRequest rentProductRequest) throws IOException {
        // String currentUser = JwtRequestFilter.CURRENT_USER;
 
         rentRepository.save(new Rent(userService.findUser(JwtRequestFilter.CURRENT_USER)  ,
@@ -40,7 +41,7 @@ public class RentService {
    return "yes";
     }
 
-    public String updateRentProduct(Long id, RentProductRequest rentProductRequest) {
+    public String updateRentProduct(Long id, RentProductRequest rentProductRequest) throws IOException {
         Optional<Rent> rent= rentRepository.findById(id);
         if(rent.isPresent()){
             Rent rentprod= rent.get();

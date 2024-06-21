@@ -9,6 +9,7 @@ import com.studyCycle.StudyCycle.entity.Rent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,14 +23,14 @@ public class DonationService {
     private ProductService productService;
     @Autowired
     private UserService userService;
-    public Donate addDonationProduct(ProductRequest productRequest) {
+    public Donate addDonationProduct(ProductRequest productRequest) throws IOException {
        // String currentUser = JwtRequestFilter.CURRENT_USER;
        return donationRepository.save(new Donate(userService.findUser(JwtRequestFilter.CURRENT_USER),
                 productService.addProduct(productRequest)
                               ));
     }
 
-    public void updateDonationProduct(Long id, ProductRequest productRequest) {
+    public void updateDonationProduct(Long id, ProductRequest productRequest) throws IOException {
         Optional<Donate> donate= donationRepository.findById(id);
         if(donate.isPresent()){
             Donate donationprod= donate.get();

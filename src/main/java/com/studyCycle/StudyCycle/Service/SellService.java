@@ -8,6 +8,7 @@ import com.studyCycle.StudyCycle.entity.Sell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,15 +22,16 @@ public class SellService {
     private ProductService productService;
     @Autowired
     private UserService userService;
-    public void addSellProduct(SellProductRequest sellproductRequest ) {
+    public void addSellProduct(SellProductRequest sellproductRequest ) throws IOException {
         //String currentUser = JwtRequestFilter.CURRENT_USER;
         sellRepository.save(new Sell(productService.addProduct(sellproductRequest.product),
                                         userService.findUser(JwtRequestFilter.CURRENT_USER),
                                         sellproductRequest.cost,
                                         sellproductRequest.type));
+
     }
 
-    public void updateSellProduct(Long id, SellProductRequest sellproductRequest) {
+    public void updateSellProduct(Long id, SellProductRequest sellproductRequest) throws IOException {
         Optional<Sell> sell= sellRepository.findById(id);
         if(sell.isPresent()){
             Sell sellprod= sell.get();
