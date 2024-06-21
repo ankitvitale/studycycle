@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import java.util.List;
+
 @Service
 public class CategoryService {
 
@@ -43,5 +45,9 @@ public class CategoryService {
     public List<Category> getAllCategory() {
         return categoryRepository.findAll();
 
+    }
+
+    public List<Category> getCategory(){
+        return categoryRepository.findAll();
     }
 }
