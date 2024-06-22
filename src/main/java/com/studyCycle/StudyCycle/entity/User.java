@@ -22,6 +22,15 @@ public class User  implements Serializable {
     private String resetCode;
     private boolean verified;
 
+    public Double getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Double wallet) {
+        this.wallet = wallet;
+    }
+
+    private Double wallet;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLE",
             joinColumns = {

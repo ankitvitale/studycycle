@@ -4,6 +4,7 @@ public class SellProductRequest {
     public ProductRequest product;
     public Double cost;
     public  String type;
+    public int Quantity;
 
     public String getType() {
         return type;
@@ -29,5 +30,11 @@ public class SellProductRequest {
         this.product = product;
     }
 
+    public int getQuantity() {
+        return Quantity;
+    }
 
+    public void setQuantity(int quantity) {
+        Quantity = quantity;
+    }
 }
