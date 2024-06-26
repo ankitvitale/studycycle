@@ -114,7 +114,6 @@ public class SellService {
                 deliveryCharge += dc;
 
 
-
                 Transaction transaction= new Transaction("incomplete",buyer,sell,a.quantity,totalPrice,pf,dc,toseller,orderId);
 //                Transaction savedTransaction = transactionRepository.save(transaction);
 //

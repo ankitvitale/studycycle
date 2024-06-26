@@ -61,7 +61,6 @@ public class AdminController {
 //
 
     @PostMapping("/addNewCategory")
-
     @PreAuthorize("hasRole('User')")
     public ResponseEntity<Category> addCategory(@RequestParam("category") String categoryName,
                                                 @RequestParam("image") MultipartFile image) {

@@ -19,7 +19,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
-public class UserService {
+public class
+UserService {
     @Autowired
     private UserRepository userDao;
     @Autowired
