@@ -23,6 +23,7 @@ public class User  implements Serializable {
     private String resetCode;
     private boolean verified;
 
+
     public Double getWallet() {
         return wallet;
     }

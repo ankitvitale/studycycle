@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+@Entity
 public class RentHistory {
+    public RentHistory() {
+    }
+
     public Long getRent_order_id() {
         return rent_order_id;
     }
