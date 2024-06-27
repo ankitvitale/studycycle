@@ -2,19 +2,14 @@ package com.studyCycle.StudyCycle.Controller;
 
 import com.razorpay.Order;
 import com.razorpay.RazorpayException;
-import com.studyCycle.StudyCycle.Payload.DonationReceipt;
-import com.studyCycle.StudyCycle.Payload.OrderRequest;
-import com.studyCycle.StudyCycle.Payload.ReceiptResponse;
-import com.studyCycle.StudyCycle.Payload.Sellinput;
+import com.studyCycle.StudyCycle.Payload.*;
 import com.studyCycle.StudyCycle.Repository.SellRepository;
 import com.studyCycle.StudyCycle.Repository.TransactionRepository;
 import com.studyCycle.StudyCycle.Service.DonationService;
 import com.studyCycle.StudyCycle.Service.PaymentService;
+import com.studyCycle.StudyCycle.Service.RentService;
 import com.studyCycle.StudyCycle.Service.SellService;
-import com.studyCycle.StudyCycle.entity.Donate;
-import com.studyCycle.StudyCycle.entity.DonateHistry;
-import com.studyCycle.StudyCycle.entity.Sell;
-import com.studyCycle.StudyCycle.entity.Transaction;
+import com.studyCycle.StudyCycle.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,6 +30,9 @@ public class PaymentController {
 
     @Autowired
     private DonationService donationService;
+
+    @Autowired
+    private RentService rentService;
     @Autowired
     private TransactionRepository transactionRepository;
 
@@ -88,6 +86,19 @@ public class PaymentController {
 
     }
 
+    //Rent
+    @PostMapping("/rentreceipt")
+    @PreAuthorize("hasRole('User')")
+    public RentReceipt getRentinput(@RequestBody RentInput order_prod) {
+        return rentService.getReceipt(order_prod);
+    }
+
+    @PostMapping("/rentOrder/{id}")
+    @PreAuthorize("hasRole('User')")
+    public RentHistory creatRentOrder(@PathVariable("id") Long id) throws Exception {
+        return rentService.processPayment(id);
+
+    }
     @GetMapping("/getorderdetails")
     @PreAuthorize("hasRole('User')")
     public ResponseEntity<Iterable<Transaction>> getAllTransactions() {

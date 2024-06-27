@@ -110,7 +110,7 @@ public class SellService {
                 user.setWallet(user.getWallet()+toseller);
                 userDao.save(user);
                 // Add fixed delivery charge per item
-                Double dc=50.0*a.quantity;
+                Double dc=70.0*a.quantity;
                 deliveryCharge += dc;
 
 
