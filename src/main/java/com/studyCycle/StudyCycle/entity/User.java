@@ -3,6 +3,7 @@ package com.studyCycle.StudyCycle.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,7 @@ public class User  implements Serializable {
     private String phoneNumber; // Changed from userLastName
     private String password; // Changed from userPassword
 
-    private String address;
+
     private String usertype;
     private String verificationCode;
     private String resetCode;
@@ -41,6 +42,8 @@ public class User  implements Serializable {
             }
     )
     private Set<Role> role;
+    @OneToMany(mappedBy = "user")
+    private List<Address> addresses;
 
     public User(String string, Object object, String fullName2, String password2) {
         // TODO Auto-generated constructor stub
@@ -82,13 +85,7 @@ public class User  implements Serializable {
         this.password = password;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getUsertype() {
         return usertype;
@@ -130,4 +127,11 @@ public class User  implements Serializable {
         this.verified = verified;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
 }

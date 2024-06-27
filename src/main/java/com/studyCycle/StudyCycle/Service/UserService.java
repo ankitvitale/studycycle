@@ -98,7 +98,7 @@ UserService {
         return null;
     }
 
-    public User completeProfile(String email, String fullName, String password, String address, String usertype, String phoneNumber) {
+    public User completeProfile(String email, String fullName, String password, String usertype, String phoneNumber) {
         if (password == null) {
             throw new IllegalArgumentException("Password cannot be null");
         }
@@ -106,7 +106,7 @@ UserService {
         User user = userDao.findByEmail(email);
         if (user != null) {
             user.setFullName(fullName);
-            user.setAddress(address);
+       //     user.setAddress(address);
             user.setUsertype(usertype);
             user.setPhoneNumber(phoneNumber);
             user.setPassword(passwordEncoder.encode(password)); // Encode the password
