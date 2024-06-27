@@ -43,8 +43,9 @@ public class User  implements Serializable {
             }
     )
     private Set<Role> role;
-    @OneToMany(mappedBy = "user")
-    private List<Address> addresses;
+
+    @OneToOne
+    private Address defultaddresse;
 
     public User(String string, Object object, String fullName2, String password2) {
         // TODO Auto-generated constructor stub
@@ -92,6 +93,22 @@ public class User  implements Serializable {
         return usertype;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Address getDefultaddresse() {
+        return defultaddresse;
+    }
+
+    public void setDefultaddresse(Address defultaddresse) {
+        this.defultaddresse = defultaddresse;
+    }
+
     public void setUsertype(String usertype) {
         this.usertype = usertype;
     }
@@ -128,11 +145,5 @@ public class User  implements Serializable {
         this.verified = verified;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
-    }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
 }

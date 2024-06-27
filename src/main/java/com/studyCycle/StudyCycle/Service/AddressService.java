@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,5 +52,18 @@ public class AddressService {
         model.longitude = address.getLongitude();
         model.address_id=address.getId();
         return model;
+    }
+
+    public void setDefaultAddress(Long id) {
+        Optional<Address> address= addressRepository.findById(id);
+        if(address.isPresent()){
+            Address address1=address.get();
+            User user=userService.findUser(JwtRequestFilter.CURRENT_USER);
+            if(user == address1.getUser()) {
+                user.setDefultaddresse(address1);
+                userRepository.save(user);
+            }
+
+        }
     }
 }

@@ -101,20 +101,22 @@ public RentReceipt getReceipt(RentInput orderProd) {
         Double returnAmt = rentProd.getDeposit_money() - rentCost;
         LocalDateTime returnDate = LocalDateTime.now().plusDays(orderProd.rent_days);
 
+        Double total= deposit + delivery + app_fees;
         RentHistory rentHistory = new RentHistory(
                 "Incomplete",
                 orderProd.rent_days,
                 rentCost,
                 returnAmt,
                 returnDate,
-                rentCost,
+                returnAmt,
+                total,
                 rentProd,
                 app_fees,
                 delivery
         );
         RentHistory savedEntity = rentHistoryRepository.save(rentHistory);
 
-        Double total = deposit + delivery + app_fees;
+
 
         return new RentReceipt(savedEntity.getRent_order_id(), deposit, app_fees, delivery, total);
     } else {
@@ -129,7 +131,7 @@ public RentReceipt getReceipt(RentInput orderProd) {
             RentHistory rentHistory = rentHistoryOptional.get();
 
             try {
-                Order order = paymentService.createOrder(rentHistory.getRent().getDeposit_money());
+                Order order = paymentService.createOrder(rentHistory.getTotal());
                 rentHistory.setRazorpay_orderId(order.get("id"));
                 rentHistory.setStatus("Successful");
                 rentHistory.setTimestamp(LocalDateTime.now());

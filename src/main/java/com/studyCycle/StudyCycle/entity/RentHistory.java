@@ -9,6 +9,7 @@ public class RentHistory {
     public RentHistory() {
     }
 
+
     public Long getRent_order_id() {
         return rent_order_id;
     }
@@ -124,6 +125,7 @@ public class RentHistory {
 
     private Double final_return;
 
+    private Double total;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rent_prod_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "transactions"})
@@ -131,7 +133,10 @@ public class RentHistory {
     private Double platformfees;
     private  Double delivery;
 
-    public RentHistory(String status, int rent_days, Double rent_cost, Double return_amt, LocalDateTime return_date, Double final_return, Rent rent, Double platformfees, Double delivery) {
+
+
+
+    public RentHistory(String status, int rent_days, Double rent_cost, Double return_amt, LocalDateTime return_date, Double final_return,Double total, Rent rent, Double platformfees, Double delivery) {
       //  this.razorpay_orderId = razorpay_orderId;
         this.status = status;
       //  this.timestamp = timestamp;
@@ -140,8 +145,17 @@ public class RentHistory {
         this.return_amt = return_amt;
         this.return_date = return_date;
         this.final_return = final_return;
+        this.total=total;
         this.rent = rent;
         this.platformfees = platformfees;
         this.delivery = delivery;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 }

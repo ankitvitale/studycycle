@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,11 +29,16 @@ public class AddressController {
     return new ResponseEntity<>("Address saved successfully", HttpStatus.CREATED);
 
     }
-@GetMapping("/foruser")
+@GetMapping("/getAlluseraddress")
 @PreAuthorize("hasRole('User')")
 public List<AddressModel> getAddress(){
 
     return addressService. getAddress();
 
 }
+    @PutMapping("/setdefaultAddress/{id}")
+    @PreAuthorize("hasRole('User')")
+    public void setdefaultAddress(@PathVariable("id") Long id){
+    addressService.setDefaultAddress(id);
+    }
 }
