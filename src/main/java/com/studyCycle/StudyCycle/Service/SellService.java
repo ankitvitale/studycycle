@@ -6,10 +6,7 @@ import com.studyCycle.StudyCycle.Payload.ReceiptResponse;
 import com.studyCycle.StudyCycle.Payload.SellProductRequest;
 import com.studyCycle.StudyCycle.Payload.SellRequest;
 import com.studyCycle.StudyCycle.Payload.Sellinput;
-import com.studyCycle.StudyCycle.Repository.AddressRepository;
-import com.studyCycle.StudyCycle.Repository.SellRepository;
-import com.studyCycle.StudyCycle.Repository.TransactionRepository;
-import com.studyCycle.StudyCycle.Repository.UserRepository;
+import com.studyCycle.StudyCycle.Repository.*;
 import com.studyCycle.StudyCycle.entity.Address;
 import com.studyCycle.StudyCycle.entity.Sell;
 import com.studyCycle.StudyCycle.entity.Transaction;
@@ -39,6 +36,8 @@ public class SellService {
     private UserService userService;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     public void addSellProduct(SellProductRequest sellproductRequest ) throws IOException {
         //String currentUser = JwtRequestFilter.CURRENT_USER;
@@ -64,7 +63,12 @@ public class SellService {
 
     public String deleteSellProduct(Long id) {
         Optional<Sell> sell= sellRepository.findById(id);
-        sell.ifPresent(value -> sellRepository.delete(value));
+
+        sell.ifPresent(value -> {
+            productRepository.delete(value.getProduct());
+            sellRepository.delete(value);
+        });
+
         return "removed";
     }
     public List<Sell> getNewSellProducts() {
