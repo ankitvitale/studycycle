@@ -1,6 +1,7 @@
 package com.studyCycle.StudyCycle.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -9,23 +10,30 @@ public class Product {
     private Long id;
     private String prod_name;
     private String description;
-    private String prod_image;
-
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> images;
     @ManyToOne
     private Category category;
 
     public Product() {
     }
 
-    public Product(String prod_name, String description, String prod_image,Category category) {
+    public Product(String prod_name, String description,Category category) {
         this.prod_name = prod_name;
         this.description = description;
-        this.prod_image = prod_image;
+       // this.prod_image = prod_image;
 
         this.category = category;
     }
 
 
+    public List<ProductImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
+    }
     public Long getId() {
         return id;
     }
@@ -48,16 +56,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-
-
-    public String getProd_image() {
-        return prod_image;
-    }
-
-    public void setProd_image(String prod_image) {
-        this.prod_image = prod_image;
     }
 
     public Category getCategory() {

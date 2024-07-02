@@ -39,9 +39,9 @@ public class SellService {
     @Autowired
     private ProductRepository productRepository;
 
-    public void addSellProduct(SellProductRequest sellproductRequest ) throws IOException {
+    public Sell addSellProduct(SellProductRequest sellproductRequest ) throws IOException {
         //String currentUser = JwtRequestFilter.CURRENT_USER;
-        sellRepository.save(new Sell(productService.addProduct(sellproductRequest.product),
+       return sellRepository.save(new Sell(productService.addProduct(sellproductRequest.product),
                                         userService.findUser(JwtRequestFilter.CURRENT_USER),
                                         sellproductRequest.cost,
                                         sellproductRequest.Quantity,

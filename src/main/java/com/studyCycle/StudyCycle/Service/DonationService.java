@@ -8,6 +8,7 @@ import com.studyCycle.StudyCycle.Payload.ProductRequest;
 import com.studyCycle.StudyCycle.Repository.AddressRepository;
 import com.studyCycle.StudyCycle.Repository.DonateHistryRepository;
 import com.studyCycle.StudyCycle.Repository.DonationRepository;
+import com.studyCycle.StudyCycle.Repository.ProductRepository;
 import com.studyCycle.StudyCycle.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,8 @@ public class DonationService {
     private DonateHistryRepository donateHistryRepository;
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Autowired
     private AddressRepository addressRepository;
@@ -53,7 +56,11 @@ public class DonationService {
 
     public String deleteRentProduct(Long id) {
         Optional<Donate> donate= donationRepository.findById(id);
-        donate.ifPresent(value -> donationRepository.delete(value));
+
+        donate.ifPresent(value -> {
+            productRepository.delete(value.getProduct());
+            donationRepository.delete(value);
+        });
         return "removed";
     }
     public List<Donate> getDonationProducts() {

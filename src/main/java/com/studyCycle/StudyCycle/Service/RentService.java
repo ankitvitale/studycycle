@@ -6,6 +6,7 @@ import com.studyCycle.StudyCycle.Payload.RentInput;
 import com.studyCycle.StudyCycle.Payload.RentProductRequest;
 import com.studyCycle.StudyCycle.Payload.RentReceipt;
 import com.studyCycle.StudyCycle.Repository.AddressRepository;
+import com.studyCycle.StudyCycle.Repository.ProductRepository;
 import com.studyCycle.StudyCycle.Repository.RentHistoryRepository;
 import com.studyCycle.StudyCycle.Repository.RentRepository;
 import com.studyCycle.StudyCycle.Configuration.JwtRequestFilter;
@@ -40,6 +41,8 @@ public class RentService {
     private RentHistoryRepository rentHistoryRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     public String addRentProduct(RentProductRequest rentProductRequest) throws IOException {
        // String currentUser = JwtRequestFilter.CURRENT_USER;
@@ -75,7 +78,10 @@ public class RentService {
 
     public String deleteRentProduct(Long id) {
         Optional<Rent> rent= rentRepository.findById(id);
-        rent.ifPresent(value -> rentRepository.delete(value));
+        rent.ifPresent(value -> {
+            productRepository.delete(value.getProduct());
+            rentRepository.delete(value);
+        });
         return "removed";
     }
 
@@ -87,7 +93,7 @@ public class RentService {
     public List<Rent> findMatching(String match) {
         return rentRepository.findMatching(match);
     }
-public RentReceipt getReceipt(RentInput orderProd) {
+    public RentReceipt getReceipt(RentInput orderProd) {
     Double deposit = 0.0d, delivery = 0.0d, app_fees = 0.0d;
 
     Optional<Rent> rentOptional = rentRepository.findById(orderProd.rent_id);

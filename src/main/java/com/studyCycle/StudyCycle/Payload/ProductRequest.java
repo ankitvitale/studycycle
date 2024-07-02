@@ -3,11 +3,29 @@ package com.studyCycle.StudyCycle.Payload;
 import com.studyCycle.StudyCycle.entity.Category;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 public class ProductRequest {
+    public ProductRequest(String prod_name, String description, List<MultipartFile> prod_image, String category) {
+        this.prod_name = prod_name;
+        this.description = description;
+        this.prod_image = prod_image;
+        this.category = category;
+    }
+
     public String prod_name;
     public String description;
-    public MultipartFile prod_image;
+
+    public List<MultipartFile> getProd_image() {
+        return prod_image;
+    }
+
+    public void setProd_image(List<MultipartFile> prod_image) {
+        this.prod_image = prod_image;
+    }
+
+    public List<MultipartFile> prod_image;
 
     public String category;
 
@@ -25,14 +43,6 @@ public class ProductRequest {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public MultipartFile getProd_image() {
-        return prod_image;
-    }
-
-    public void setProd_image(MultipartFile prod_image) {
-        this.prod_image = prod_image;
     }
 
     public String getCategory() {

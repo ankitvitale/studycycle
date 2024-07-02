@@ -34,6 +34,13 @@ public class SellProductRequest {
         return Quantity;
     }
 
+    public SellProductRequest(ProductRequest product, Double cost, String type, int quantity) {
+        this.product = product;
+        this.cost = cost;
+        this.type = type;
+        Quantity = quantity;
+    }
+
     public void setQuantity(int quantity) {
         Quantity = quantity;
     }
