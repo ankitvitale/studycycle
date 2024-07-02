@@ -36,6 +36,9 @@ public class Transaction {
 
     private Double toseller;
 
+    @OneToOne
+    private Address delivery_address;
+
     public String getOrderId() {
         return orderId;
     }
@@ -48,7 +51,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(String status, User buyer, Sell sell, int orderquantity, Double totalprice, Double platformfees, Double delivery, Double toseller,String orderId) {
+    public Transaction(String status, User buyer, Sell sell, int orderquantity, Double totalprice, Double platformfees, Double delivery, Double toseller,String orderId, Address address) {
      //   this.orderAmount = orderAmount;
         this.status = status;
         this.buyer = buyer;
@@ -59,6 +62,7 @@ public class Transaction {
         this.delivery = delivery;
         this.toseller = toseller;
         this.orderId=orderId;
+        this.delivery_address=address;
     }
 
     public Transaction(double amount, String currency, LocalDateTime timestamp, String status, Sell sell, int quantity) {

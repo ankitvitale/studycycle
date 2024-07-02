@@ -4,7 +4,6 @@ import com.studyCycle.StudyCycle.Repository.CategoryRepository;
 import com.studyCycle.StudyCycle.Service.AdminService;
 import com.studyCycle.StudyCycle.Service.CategoryService;
 import com.studyCycle.StudyCycle.entity.Category;
-import com.studyCycle.StudyCycle.entity.Donate;
 import com.studyCycle.StudyCycle.entity.Shopkeeper;
 import com.studyCycle.StudyCycle.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

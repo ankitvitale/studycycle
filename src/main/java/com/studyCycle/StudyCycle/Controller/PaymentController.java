@@ -36,13 +36,12 @@ public class PaymentController {
     @Autowired
     private TransactionRepository transactionRepository;
 
-
     public void PaymentConroller(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
     @PostMapping("/sellreceipt")
     @PreAuthorize("hasRole('User')")
-    public ReceiptResponse getSellinput(@RequestBody List<Sellinput> order_prod) {
+    public ReceiptResponse getSellinput(@RequestBody SellRequest order_prod) {
         // Fetch the Sellinput data from the service
         return sellService.getReceipt(order_prod);
     }

@@ -5,9 +5,11 @@ import com.razorpay.Order;
 import com.studyCycle.StudyCycle.Payload.RentInput;
 import com.studyCycle.StudyCycle.Payload.RentProductRequest;
 import com.studyCycle.StudyCycle.Payload.RentReceipt;
+import com.studyCycle.StudyCycle.Repository.AddressRepository;
 import com.studyCycle.StudyCycle.Repository.RentHistoryRepository;
 import com.studyCycle.StudyCycle.Repository.RentRepository;
 import com.studyCycle.StudyCycle.Configuration.JwtRequestFilter;
+import com.studyCycle.StudyCycle.entity.Address;
 import com.studyCycle.StudyCycle.entity.Rent;
 import com.studyCycle.StudyCycle.entity.RentHistory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class RentService {
     private PaymentService paymentService;
     @Autowired
     private RentHistoryRepository rentHistoryRepository;
+    @Autowired
+    private AddressRepository addressRepository;
+
     public String addRentProduct(RentProductRequest rentProductRequest) throws IOException {
        // String currentUser = JwtRequestFilter.CURRENT_USER;
 
@@ -101,7 +106,12 @@ public RentReceipt getReceipt(RentInput orderProd) {
         Double returnAmt = rentProd.getDeposit_money() - rentCost;
         LocalDateTime returnDate = LocalDateTime.now().plusDays(orderProd.rent_days);
 
-        Double total= deposit + delivery + app_fees;
+        Double total = deposit + delivery + app_fees;
+        Optional<Address> address = addressRepository.findById(orderProd.delivery_address);
+        Address delivery_address = null;
+        if (address.isPresent()) {
+            delivery_address = address.get();
+        }
         RentHistory rentHistory = new RentHistory(
                 "Incomplete",
                 orderProd.rent_days,
@@ -112,10 +122,10 @@ public RentReceipt getReceipt(RentInput orderProd) {
                 total,
                 rentProd,
                 app_fees,
-                delivery
+                delivery,
+                delivery_address
         );
         RentHistory savedEntity = rentHistoryRepository.save(rentHistory);
-
 
 
         return new RentReceipt(savedEntity.getRent_order_id(), deposit, app_fees, delivery, total);

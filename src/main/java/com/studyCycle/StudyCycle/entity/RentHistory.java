@@ -132,11 +132,13 @@ public class RentHistory {
     private Rent rent;
     private Double platformfees;
     private  Double delivery;
+    @OneToOne
+    private Address deliveryaddress;
 
 
 
 
-    public RentHistory(String status, int rent_days, Double rent_cost, Double return_amt, LocalDateTime return_date, Double final_return,Double total, Rent rent, Double platformfees, Double delivery) {
+    public RentHistory(String status, int rent_days, Double rent_cost, Double return_amt, LocalDateTime return_date, Double final_return, Double total, Rent rent, Double platformfees, Double delivery, Address deliveryaddresse) {
       //  this.razorpay_orderId = razorpay_orderId;
         this.status = status;
       //  this.timestamp = timestamp;
@@ -149,6 +151,7 @@ public class RentHistory {
         this.rent = rent;
         this.platformfees = platformfees;
         this.delivery = delivery;
+        this.deliveryaddress = deliveryaddresse;
     }
 
     public Double getTotal() {
