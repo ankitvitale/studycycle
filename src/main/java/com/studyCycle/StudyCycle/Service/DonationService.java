@@ -2,24 +2,20 @@ package com.studyCycle.StudyCycle.Service;
 
 
 import com.razorpay.Order;
-import com.razorpay.RazorpayException;
 import com.studyCycle.StudyCycle.Configuration.JwtRequestFilter;
 import com.studyCycle.StudyCycle.Payload.DonationReceipt;
 import com.studyCycle.StudyCycle.Payload.ProductRequest;
-import com.studyCycle.StudyCycle.Payload.ReceiptResponse;
+import com.studyCycle.StudyCycle.Repository.AddressRepository;
 import com.studyCycle.StudyCycle.Repository.DonateHistryRepository;
 import com.studyCycle.StudyCycle.Repository.DonationRepository;
 import com.studyCycle.StudyCycle.entity.*;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -36,6 +32,9 @@ public class DonationService {
     private DonateHistryRepository donateHistryRepository;
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private AddressRepository addressRepository;
     public Donate addDonationProduct(ProductRequest productRequest) throws IOException {
        // String currentUser = JwtRequestFilter.CURRENT_USER;
        return donationRepository.save(new Donate(userService.findUser(JwtRequestFilter.CURRENT_USER),
@@ -71,7 +70,7 @@ public class DonationService {
        return donationReceipt;
 
     }
-    public DonateHistry processPayment(Long id) throws Exception {
+    public DonateHistry processPayment(Long id, Long address_id) throws Exception {
         //product
         Optional<Donate> donate = donationRepository.findById(id);
         Donate donationprod = null;
@@ -87,7 +86,15 @@ public class DonationService {
         DonateHistry t = new DonateHistry();
         t.setDonate(donationprod);
 
+        Optional<Address> deliveryAddressOpt = addressRepository.findById(address_id);
 
+        if (deliveryAddressOpt.isPresent()) {
+            Address address = deliveryAddressOpt.get();
+
+           t.setAddress(address);
+        } else {
+            throw new RuntimeException("Address not found for ID: " + address_id);
+        }
         t.setBuyer(buyer);
         t.setDelivery(50.0);
         t.setPlatformfees(20.0);

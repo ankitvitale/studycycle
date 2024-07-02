@@ -80,8 +80,8 @@ public class PaymentController {
     }
     @PostMapping("/donateOrder/{id}")
     @PreAuthorize("hasRole('User')")
-    public DonateHistry processPayment(@PathVariable("id") Long id) throws Exception {
-       return donationService.processPayment(id);
+    public DonateHistry processPayment(@PathVariable("id") Long id, @RequestParam Long address_id) throws Exception {
+       return donationService.processPayment(id,address_id);
 
     }
 

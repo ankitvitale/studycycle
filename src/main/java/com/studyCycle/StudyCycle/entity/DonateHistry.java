@@ -32,6 +32,17 @@ public class DonateHistry {
     private Double platformfees;
 
     private  Double delivery;
+
+    public Address getAddress() {
+        return delivery_address;
+    }
+
+    public void setAddress(Address address) {
+        this.delivery_address = address;
+    }
+
+    @OneToOne
+    private Address delivery_address;
     public DonateHistry(){}
     public DonateHistry(Long id, String currency, LocalDateTime timestamp, String status, String razorpay_orderId, User buyer,  Donate donate, Double totalprice, Double platformfees, Double delivery) {
         this.id = id;
