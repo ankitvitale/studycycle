@@ -3,6 +3,7 @@ package com.studyCycle.StudyCycle.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,16 @@ public class User  implements Serializable {
     private String resetCode;
     private boolean verified;
 
+    public String getUpi_id() {
+        return upi_id;
+    }
+
+    public void setUpi_id(String upi_id) {
+        this.upi_id = upi_id;
+    }
+
+    private String upi_id;
+
 
     public Double getWallet() {
         return wallet;
@@ -33,6 +44,26 @@ public class User  implements Serializable {
     }
 
     private Double wallet;
+
+    public LocalDateTime getClaimingTime() {
+        return claimingTime;
+    }
+
+    public void setClaimingTime(LocalDateTime claimingTime) {
+        this.claimingTime = claimingTime;
+    }
+
+    private LocalDateTime claimingTime;
+
+    public Double getClaimedMoney() {
+        return claimedMoney;
+    }
+
+    public void setClaimedMoney(Double claimedMoney) {
+        this.claimedMoney = claimedMoney;
+    }
+
+    private Double claimedMoney;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLE",
             joinColumns = {

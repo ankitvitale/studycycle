@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -68,7 +69,9 @@ public class AdminService {
             Optional<Shopkeeper> entity = shopkeeperRepository.findByUser(user.get());
             if(entity.isPresent()){
                 Shopkeeper shopkeeper= entity.get();
-                shopkeeper.setDue_date(java.sql.Date.valueOf(LocalDate.now().plusMonths(1)));
+                LocalDate currentDueDate = shopkeeper.getDue_date().toLocalDate();
+                LocalDate newDueDate = currentDueDate.plus(1, ChronoUnit.MONTHS);
+                shopkeeper.setDue_date(java.sql.Date.valueOf(newDueDate));
                 shopkeeperRepository.save(shopkeeper);
             }
         }

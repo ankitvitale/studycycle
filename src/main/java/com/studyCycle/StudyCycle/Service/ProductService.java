@@ -55,6 +55,7 @@ public class ProductService {
                 ProductImage image = new ProductImage(prod_image, prod);
                 images.add(image);
             }
+            //delete first
             productImageRepository.saveAll(images);
             prod.setImages(images);
        prod.setProd_name(productRequest.prod_name);

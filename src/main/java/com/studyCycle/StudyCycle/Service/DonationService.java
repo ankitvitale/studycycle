@@ -83,6 +83,8 @@ public class DonationService {
         Donate donationprod = null;
         if (donate.isPresent()) {
             donationprod = donate.get();
+            donationprod.setStatus("Unavailable");
+            donationRepository.save(donationprod);
         }
         else{
             throw new Exception("wrong donation product");
@@ -92,6 +94,7 @@ public class DonationService {
         User buyer = userService.findUser(JwtRequestFilter.CURRENT_USER);
         DonateHistry t = new DonateHistry();
         t.setDonate(donationprod);
+
 
         Optional<Address> deliveryAddressOpt = addressRepository.findById(address_id);
 
@@ -120,4 +123,18 @@ public class DonationService {
         return donateHistryRepository.save(t);
     }
 
+    //to be checked
+    public DonateHistry cancelDonateOrder(Long id) throws Exception {
+        Optional<DonateHistry> donateHistry=donateHistryRepository.findById(id);
+        if(donateHistry.isPresent()){
+            DonateHistry d=donateHistry.get();
+            d.setStatus("Cancelled");
+            d.getDonate().setStatus("Available");
+            d.getBuyer().setWallet(d.getBuyer().getWallet()+d.getTotalprice());
+           return donateHistryRepository.save(d);
+        }
+        else{
+            throw new Exception("Error Occurred!! Wrong Id");
+        }
+    }
 }

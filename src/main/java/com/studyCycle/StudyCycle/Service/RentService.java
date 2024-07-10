@@ -141,7 +141,7 @@ public class RentService {
     }
 }
 
-    public RentHistory processPayment(Long id) {
+    public RentHistory processPayment(Long id) throws Exception {
         Optional<RentHistory> rentHistoryOptional = rentHistoryRepository.findById(id);
         if (rentHistoryOptional.isPresent()) {
             RentHistory rentHistory = rentHistoryOptional.get();
@@ -158,11 +158,24 @@ public class RentService {
                 rentHistoryRepository.save(rentHistory);
                 throw new RuntimeException("Payment processing failed: " + e.getMessage(), e);
             }
-        } else {
+        }  else{
+            throw new Exception("Error Occurred!! Wrong Id");
+        }
+    }
+//to be tested
+    public RentHistory cancelRentOrder(Long id) {
+        Optional<RentHistory> rentHistory= rentHistoryRepository.findById(id);
+     if(rentHistory.isPresent()){
+         RentHistory r= rentHistory.get();
+         r.setStatus("Cancelled");
+         r.getRent().setStatus("available");
+         r.getRent().getTenant().setWallet( r.getRent().getTenant().getWallet()+r.getTotal());
+        return rentHistoryRepository.save(r);
+     }
+        else {
             throw new RuntimeException("Rent history not found with id: " + id);
         }
     }
-
 }
 
 

@@ -6,6 +6,7 @@ import com.studyCycle.StudyCycle.Service.CategoryService;
 import com.studyCycle.StudyCycle.entity.Category;
 import com.studyCycle.StudyCycle.entity.Shopkeeper;
 import com.studyCycle.StudyCycle.entity.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,7 +39,7 @@ public class AdminController {
     public List<Shopkeeper> dueList() {
        return adminService.dueList();
     }
-    @PutMapping("/pushDueDate")
+    @PutMapping("/pushDueDate/{id}")
     public void pushDueDate(@PathVariable Long id) {
         adminService.pushDueDate(id);
     }

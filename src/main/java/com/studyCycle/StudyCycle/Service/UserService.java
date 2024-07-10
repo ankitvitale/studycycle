@@ -1,5 +1,6 @@
 package com.studyCycle.StudyCycle.Service;
 
+import com.studyCycle.StudyCycle.Configuration.JwtRequestFilter;
 import com.studyCycle.StudyCycle.Payload.SearchResponse;
 import com.studyCycle.StudyCycle.Repository.RoleRepository;
 import com.studyCycle.StudyCycle.Repository.ShopkeeperRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -188,4 +190,15 @@ UserService {
         return new SearchResponse(rentService.findMatching(match), sellService.findNewMatching(match), sellService.findOldMatching(match), donationService.findMatching(match));
     }
 
+    //to be tested
+    public void claimMoney(String upiId, Double amount) {
+        User user=findUser(JwtRequestFilter.CURRENT_USER);
+        if(!Objects.equals(user.getUpi_id(), upiId)){
+            user.setUpi_id(upiId);
+            user.setClaimedMoney(amount);
+            user.setWallet(user.getWallet()-amount);
+            user.setClaimingTime(LocalDateTime.now());
+            userDao.save(user);
+        }
+    }
 }

@@ -41,6 +41,10 @@ public class UserController {
         return userService.completeProfile(email,fullName, password,usertype,phoneNumber);
     }
 
+    @PostMapping("/claimMoney")
+    public void claimMoney(@RequestParam String upi_id, @RequestParam Double amount){
+        userService.claimMoney(upi_id,amount);
+    }
 
     @PostMapping("/request-password-reset")
     public boolean requestPasswordReset(@RequestParam String email) {

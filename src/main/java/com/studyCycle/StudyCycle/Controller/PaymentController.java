@@ -85,7 +85,15 @@ public class PaymentController {
 
     }
 
-    //Rent
+    @PostMapping("/cancelDonateOrder/{id}")
+    @PreAuthorize("hasRole('User')")
+    public DonateHistry cancelDonateOrder(@PathVariable("id") Long id) throws Exception {
+        return donationService.cancelDonateOrder(id);}
+
+
+
+
+        //Rent
     @PostMapping("/rentreceipt")
     @PreAuthorize("hasRole('User')")
     public RentReceipt getRentinput(@RequestBody RentInput order_prod) {
@@ -96,6 +104,13 @@ public class PaymentController {
     @PreAuthorize("hasRole('User')")
     public RentHistory creatRentOrder(@PathVariable("id") Long id) throws Exception {
         return rentService.processPayment(id);
+
+    }
+
+    @PostMapping("/cancelRentOrder/{id}")
+    @PreAuthorize("hasRole('User')")
+    public RentHistory cancelRentOrder(@PathVariable("id") Long id) throws Exception {
+        return rentService.cancelRentOrder(id);
 
     }
     @GetMapping("/getorderdetails")
