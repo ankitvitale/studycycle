@@ -64,6 +64,25 @@ public class User  implements Serializable {
     }
 
     private Double claimedMoney;
+
+    public Double getClaims() {
+        return claims;
+    }
+
+    public void setClaims(Double claims) {
+        this.claims = claims;
+    }
+
+    private Double claims;
+    public String getClaimstatus() {
+        return claimstatus;
+    }
+
+    public void setClaimstatus(String claimstatus) {
+        this.claimstatus = claimstatus;
+    }
+
+    private String claimstatus;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLE",
             joinColumns = {

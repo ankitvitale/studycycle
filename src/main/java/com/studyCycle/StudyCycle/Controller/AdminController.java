@@ -1,5 +1,6 @@
 package com.studyCycle.StudyCycle.Controller;
 
+import com.studyCycle.StudyCycle.Payload.CLaimMoney;
 import com.studyCycle.StudyCycle.Repository.CategoryRepository;
 import com.studyCycle.StudyCycle.Service.AdminService;
 import com.studyCycle.StudyCycle.Service.CategoryService;
@@ -54,11 +55,16 @@ public class AdminController {
         adminService.unBlockUser(id);
     }
 
-//    @PostMapping("/addNewCategory")
-//    public void addNewCategory(@RequestParam String category) {
-//        adminService.createNewCategory(category);
-//    }
-//
+    @GetMapping("/claimMoneyList")
+    public List<CLaimMoney> claimMoney(){
+       return adminService.claimMoney();
+    }
+
+    @PostMapping("/markClaimed")
+    public void markClaimed(@RequestParam("userId") Long userId,
+                            @RequestParam("claimedMoney") Double claimedMoney){
+        adminService.markClaimed(userId,claimedMoney);
+    }
 
     @PostMapping("/addNewCategory")
     @PreAuthorize("hasRole('User')")

@@ -1,6 +1,7 @@
 package com.studyCycle.StudyCycle.Service;
 
 
+import com.studyCycle.StudyCycle.Payload.CLaimMoney;
 import com.studyCycle.StudyCycle.Repository.ShopkeeperRepository;
 import com.studyCycle.StudyCycle.Repository.UserRepository;
 import com.studyCycle.StudyCycle.entity.Category;
@@ -8,14 +9,12 @@ import com.studyCycle.StudyCycle.entity.Shopkeeper;
 import com.studyCycle.StudyCycle.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AdminService {
@@ -87,5 +86,28 @@ public class AdminService {
 
     public List<User> getBlockList() {
         return userService.getBlockList();
+    }
+
+    public List<CLaimMoney> claimMoney() {
+        List<User> userList= userDao.finalAllByClaimstatus("pending");
+        List<CLaimMoney> list= new ArrayList<>();
+        for(User u: userList){
+            CLaimMoney cLaimMoney= new CLaimMoney(u.getId(),u.getFullName(),u.getUpi_id(),u.getClaimedMoney(),u.getWallet());
+            list.add(cLaimMoney);
+        }
+        return list;
+    }
+
+    public void markClaimed(Long userId, Double claimedMoney) {
+        Optional<User> user_Opt= userDao.findById(userId);
+        if(user_Opt.isPresent()){
+            User user = user_Opt.get();
+            if(Objects.equals(user.getClaimedMoney(), claimedMoney)){
+                user.setClaimstatus("Claimed");
+                user.setClaims(user.getClaims()+claimedMoney);
+                user.setClaimedMoney(0.0);
+                userDao.save(user);
+            }
+        }
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class PaymentController {
@@ -57,10 +58,11 @@ public class PaymentController {
             for(Transaction t: transactions){
                 t.setAmount(amount);
                 t.setCurrency("INR");
-                t.setStatus("Completed");
+                t.setStatus("Pending");
                 t.setTimestamp(LocalDateTime.now());
                 t.setrazorpay_orderId(order.get("id"));
                 transactionRepository.save(t);
+
             }
                    // paymentService.saveTransaction(order.get("id"), amount, "INR", "CREATED", sell);
            // paymentService.createOrder(amount);
@@ -70,6 +72,59 @@ public class PaymentController {
         }
 
     }
+    @PostMapping("/cancelSellOrder/{orderid}")
+    @PreAuthorize("hasRole('User')")
+    public ResponseEntity<String>  cancelSellOrder(@PathVariable String orderid) {
+        try {
+
+            List<Transaction> transactions = transactionRepository.findAllByOrderId(orderid);
+            int i=0;
+            for(Transaction t: transactions){
+                if(i==0){
+                    t.getBuyer().setWallet( t.getBuyer().getWallet()+ t.getOrderAmount());
+                    i++;
+                }
+                t.setStatus("Cancelled");
+                t.setTimestamp(LocalDateTime.now());
+                t.getSell().setQuantity(t.getSell().getQuantity()+ t.getOrderquantity());
+                transactionRepository.save(t);
+            }
+
+            return ResponseEntity.ok("Order cancelled successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+       }
+        @PostMapping("/SucessSellOrder/{transactionid}")
+        @PreAuthorize("hasRole('Admin')")
+        public Transaction  SucessSellOrder(@PathVariable Long transactionid) {
+                Optional<Transaction> transaction_opt = transactionRepository.findById(transactionid);
+                if(transaction_opt.isPresent()){
+                    Transaction transaction=transaction_opt.get();
+                    transaction.getSell().getUser().setWallet( transaction.getSell().getUser().getWallet()+transaction.getToseller());
+                    transaction.setStatus("Successful");
+                   return transactionRepository.save(transaction);
+                }
+
+//                for(Transaction t: transactions){
+//                    if(i==0){
+//                        t.getSell().getUser().setWallet( t.getBuyer().getWallet()+ toseller);
+//                        i++;
+//                    }
+//                    toseller+=t.getToseller();
+//                    // t.setCurrency("INR");
+//                    t.setStatus("Successful");
+//                    t.setTimestamp(LocalDateTime.now());
+//                    // t.setrazorpay_orderId(order.get("id"));
+//                    transactionRepository.save(t);
+//                }
+               // return ResponseEntity.ok("Order cancelled successfully");
+           else {
+                throw new RuntimeException("Error !! No Transaction");
+            }
+
+    }
+
 
     //Donate
     @PostMapping("/donatereceipt")
@@ -89,9 +144,6 @@ public class PaymentController {
     @PreAuthorize("hasRole('User')")
     public DonateHistry cancelDonateOrder(@PathVariable("id") Long id) throws Exception {
         return donationService.cancelDonateOrder(id);}
-
-
-
 
         //Rent
     @PostMapping("/rentreceipt")
@@ -113,6 +165,12 @@ public class PaymentController {
         return rentService.cancelRentOrder(id);
 
     }
+//    @PostMapping("/SucessRentOrder/{orderid}")
+//    @PreAuthorize("hasRole('User')")
+//    public RentHistory SucessRentOrder(@PathVariable("id") Long id) throws Exception {
+//        return rentService.SucessRentOrder(id);
+//
+//    }
     @GetMapping("/getorderdetails")
     @PreAuthorize("hasRole('User')")
     public ResponseEntity<Iterable<Transaction>> getAllTransactions() {

@@ -64,7 +64,7 @@ public class DonationService {
         return "removed";
     }
     public List<Donate> getDonationProducts() {
-       return donationRepository.findAll();
+       return donationRepository.findAllByStatus("available");
     }
 
     public List<Donate> findMatching(String match) {
