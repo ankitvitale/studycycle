@@ -177,9 +177,9 @@ public class SellService {
 
                 double toSeller = totalPrice - pf;
 
-                User seller = sell.getUser();
-                seller.setWallet(seller.getWallet() + toSeller);
-                userDao.save(seller);
+               // User seller = sell.getUser();
+               // seller.setWallet(seller.getWallet() + toSeller);
+               // userDao.save(seller);
 
                 // Add fixed delivery charge per item
                 double dc = 70.0 * input.getQuantity();

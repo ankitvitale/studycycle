@@ -176,6 +176,15 @@ public class RentService {
             throw new RuntimeException("Rent history not found with id: " + id);
         }
     }
+
+//    public RentHistory SucessRentOrder(Long id) {
+//        Optional<RentHistory> rentHistory= rentHistoryRepository.findById(id);
+//        if(rentHistory.isPresent()){
+//            RentHistory r= rentHistory.get();
+//            r.setStatus("Successful");
+//            r.getRent().getTenant().setWallet(r.getRent().getTenant().getWallet()+r.getFinal_return());
+//        }
+//    }
 }
 
 

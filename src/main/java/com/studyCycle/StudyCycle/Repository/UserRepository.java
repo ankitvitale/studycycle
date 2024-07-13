@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long>  {
 
     @Query("SELECT u FROM User u WHERE u.verified = false")
     List<User> findUnverifiedUsers();
+
+    @Query("SELECT u FROM User u WHERE u.claimstatus = :pending")
+    List<User> finalAllByClaimstatus(@Param("pending") String pending);
 }

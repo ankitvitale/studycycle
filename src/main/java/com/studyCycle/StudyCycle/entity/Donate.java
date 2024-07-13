@@ -46,5 +46,6 @@ public class Donate {
     public Donate(User user, Product product) {
         this.user = user;
         this.product = product;
+        this.status="available";
     }
 }

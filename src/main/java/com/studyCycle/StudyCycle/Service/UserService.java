@@ -193,12 +193,16 @@ UserService {
     //to be tested
     public void claimMoney(String upiId, Double amount) {
         User user=findUser(JwtRequestFilter.CURRENT_USER);
-        if(!Objects.equals(user.getUpi_id(), upiId)){
-            user.setUpi_id(upiId);
+        if(amount>user.getWallet()) {
+            if (!Objects.equals(user.getUpi_id(), upiId)) {
+                user.setUpi_id(upiId);
+            }
             user.setClaimedMoney(amount);
-            user.setWallet(user.getWallet()-amount);
+            user.setWallet(user.getWallet() - amount);
             user.setClaimingTime(LocalDateTime.now());
+            user.setClaimstatus("pending");
             userDao.save(user);
         }
+
     }
 }
