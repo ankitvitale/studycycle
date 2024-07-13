@@ -22,6 +22,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private static final String[] PUBLIC_URLS = {
+            "/verify",
+            "/register",
+            "/complete-profile",
+            "/login",
+            "/getAvailableRentals",
+            "/getSellProducts",
+            "/registerNewUser",
+            "/getOldSellProducts",
+            "/getNewSellProducts",
+            "/registerAdmin",
+            "/request-password-reset",
+            "/verify-reset-code",
+            "/reset-password",
+            "/complete-admin"
+    };
+
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -41,16 +58,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
         httpSecurity.csrf(csrf -> csrf.disable())
-                .authorizeRequests(requests -> requests.antMatchers("/verify",
-                                "/register",
-                                "/complete-profile",
-                                "/login",
-                                "/getAvailableRentals",
-                                "/getSellProducts",
-                                "/registerNewUser",
-                               "/getOldSellProducts",
-                                "/getNewSellProducts",
-                                "/registerAdmin","/request-password-reset","/verify-reset-code","/reset-password").permitAll()
+                .authorizeRequests(requests -> requests.antMatchers(PUBLIC_URLS).permitAll()
                         .antMatchers(HttpHeaders.ALLOW).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(jwtAuthenticationEntryPoint))

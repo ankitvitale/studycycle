@@ -1,5 +1,7 @@
 package com.studyCycle.StudyCycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.Id;
 @Entity
@@ -13,6 +15,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "Userid", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
     public Address(){}
     public Address(Long id, double latitude, double longitude, User user) {

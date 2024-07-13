@@ -5,6 +5,7 @@ import com.studyCycle.StudyCycle.Payload.SearchResponse;
 import com.studyCycle.StudyCycle.Service.UserService;
 import com.studyCycle.StudyCycle.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -41,7 +42,14 @@ public class UserController {
         return userService.completeProfile(email,fullName, password,usertype,phoneNumber);
     }
 
+    @PostMapping("/complete-admin")
+    public User completeAdmin( @RequestParam String phoneNumber,@RequestParam String email,@RequestParam String fullName, @RequestParam String password,@RequestParam String usertype) {
+        return userService.completeAdmin(email,fullName, password,usertype,phoneNumber);
+    }
+
+
     @PostMapping("/claimMoney")
+    @PreAuthorize("hasRole('User')")
     public void claimMoney(@RequestParam String upi_id, @RequestParam Double amount){
         userService.claimMoney(upi_id,amount);
     }

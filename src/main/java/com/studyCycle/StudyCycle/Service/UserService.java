@@ -113,6 +113,35 @@ UserService {
             user.setPhoneNumber(phoneNumber);
             user.setPassword(passwordEncoder.encode(password)); // Encode the password
             Role role = roleDao.findById("User").get();
+
+            Set<Role> userRoles = new HashSet<>();
+            userRoles.add(role);
+            user.setRole(userRoles);
+            userDao.save(user);
+            //check
+            if (usertype.equals("Shopkeeper")) {
+                Shopkeeper shopkeeper = new Shopkeeper(user, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now().plusMonths(3)));
+                shopkeeperRepository.save(shopkeeper);
+            }
+            return user;
+        }
+        return null;
+    }
+
+    public User completeAdmin(String email, String fullName, String password, String usertype, String phoneNumber) {
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+
+        User user = userDao.findByEmail(email);
+        if (user != null) {
+            user.setFullName(fullName);
+            //     user.setAddress(address);
+            user.setUsertype(usertype);
+            user.setPhoneNumber(phoneNumber);
+            user.setPassword(passwordEncoder.encode(password)); // Encode the password
+            Role role = roleDao.findById("Admin").get();
+
             Set<Role> userRoles = new HashSet<>();
             userRoles.add(role);
             user.setRole(userRoles);
@@ -193,7 +222,7 @@ UserService {
     //to be tested
     public void claimMoney(String upiId, Double amount) {
         User user=findUser(JwtRequestFilter.CURRENT_USER);
-        if(amount>user.getWallet()) {
+        if(amount<=user.getWallet()) {
             if (!Objects.equals(user.getUpi_id(), upiId)) {
                 user.setUpi_id(upiId);
             }

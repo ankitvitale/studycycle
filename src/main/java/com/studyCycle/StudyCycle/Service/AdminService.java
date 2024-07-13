@@ -104,6 +104,9 @@ public class AdminService {
             User user = user_Opt.get();
             if(Objects.equals(user.getClaimedMoney(), claimedMoney)){
                 user.setClaimstatus("Claimed");
+                if (user.getClaims() == null) {
+                    user.setClaims(0.0);
+                }
                 user.setClaims(user.getClaims()+claimedMoney);
                 user.setClaimedMoney(0.0);
                 userDao.save(user);
