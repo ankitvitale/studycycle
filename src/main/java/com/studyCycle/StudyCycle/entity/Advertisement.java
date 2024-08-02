@@ -1,7 +1,6 @@
 package com.studyCycle.StudyCycle.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
 public class Advertisement {
@@ -18,9 +17,13 @@ public class Advertisement {
         return user;
     }
 
+//    public void setUser(String user) {
+//        this.user = user;
+
     public void setUser(User user) {
         this.user = user;
     }
+//    }
 
     public String getBanner() {
         return banner;

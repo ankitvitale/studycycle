@@ -23,15 +23,21 @@ public class DonationController {
     }
 
     @PostMapping("/updateDonationProduct/{id}")
+    @PreAuthorize("hasRole('User')")
+
     public void updateDonationProduct(@PathVariable("id") Long id,@RequestBody ProductRequest productRequest) throws IOException {
         donationService.updateDonationProduct(id,productRequest);
     }
     @DeleteMapping("/deleteDonationProduct/{id}")
+    @PreAuthorize("hasRole('User')")
+
     public String deleteRentProduct(@PathVariable("id") Long id) {
         return donationService.deleteRentProduct(id);
     }
 
     @GetMapping("/getDonationProducts")
+    @PreAuthorize("hasRole('User')")
+
     public List<Donate> getDonationProducts(){
         return  donationService.getDonationProducts();
     }

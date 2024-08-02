@@ -1,31 +1,46 @@
 package com.studyCycle.StudyCycle.Configuration;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3Configuration;
+
+import java.net.URI;
 
 @Configuration
 public class AmazonS3Config {
 
-    @Value("${aws.accessKeyId}")
-    private String accessKey;
-
-    @Value("${aws.secretKey}")
-    private String secretKey;
-
-    @Value("${region}")
-    private String region;
-
     @Bean
-    public AmazonS3 amazonS3() {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
-        return AmazonS3ClientBuilder.standard()
-                .withRegion(region)
-                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+    public S3Client s3Client() {
+        return S3Client.builder()
+                .region(Region.US_EAST_1) // This is required but will be ignored by the custom endpoint
+                .endpointOverride(URI.create("https://blr1.digitaloceanspaces.com"))
+                .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(
+                        "DO00WXBHC4LZ2BXCWUWZ",
+                        "NsGo7BivJXQbp6Yfh8fNpzUFfaXAEoAPo7FqqXZoNxY")))
+                .serviceConfiguration(S3Configuration.builder().pathStyleAccessEnabled(true).build())
                 .build();
     }
+
+//    @Value("${aws.accessKeyId}")
+//    private String accessKey;
+//
+//    @Value("${aws.secretKey}")
+//    private String secretKey;
+//
+//    @Value("${region}")
+//    private String region;
+//
+//    @Bean
+//    public AmazonS3 amazonS3() {
+//        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
+//        return AmazonS3ClientBuilder.standard()
+//                .withRegion(region)
+//                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+//                .build();
+//    }
 }

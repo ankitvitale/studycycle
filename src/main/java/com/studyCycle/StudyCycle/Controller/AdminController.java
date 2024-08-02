@@ -66,21 +66,21 @@ public class AdminController {
         adminService.markClaimed(userId,claimedMoney);
     }
 
-    @PostMapping("/addNewCategory")
-    @PreAuthorize("hasRole('User')")
-    public ResponseEntity<Category> addCategory(@RequestParam("category") String categoryName,
-                                                @RequestParam("image") MultipartFile image) {
-        try {
-            String imageUrl = categoryService.uploadFile(image);
-            Category category = new Category();
-            category.setCategoryName(categoryName);
-            category.setImageUrl(imageUrl);
-            categoryRepository.save(category);
-            return ResponseEntity.ok(category);
-        } catch (IOException e) {
-            return ResponseEntity.status(500).body(null);
-        }
-    }
+//    @PostMapping("/addNewCategory")
+//    @PreAuthorize("hasRole('User')")
+//    public ResponseEntity<Category> addCategory(@RequestParam("category") String categoryName,
+//                                                @RequestParam("image") MultipartFile image) {
+//        try {
+//            String imageUrl = categoryService.uploadFile(image);
+//            Category category = new Category();
+//            category.setCategoryName(categoryName);
+//            category.setImageUrl(imageUrl);
+//            categoryRepository.save(category);
+//            return ResponseEntity.ok(category);
+//        } catch (IOException e) {
+//            return ResponseEntity.status(500).body(null);
+//        }
+//    }
     @GetMapping("/category")
     public List<Category> getCategory() {
         return adminService.getCategory();
