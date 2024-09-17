@@ -2,6 +2,7 @@ package com.studyCycle.StudyCycle.Controller;
 
 
 import com.studyCycle.StudyCycle.Payload.SearchResponse;
+import com.studyCycle.StudyCycle.Payload.VerificationRequest1;
 import com.studyCycle.StudyCycle.Service.UserService;
 import com.studyCycle.StudyCycle.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,15 @@ public class UserController {
         return null;
     }
 
-    @PostMapping("/verify")
-    public String verify(@RequestParam String verificationCode) {
-        return userService.verifyUser(verificationCode);
-    }
-
-
+//    @PostMapping("/verify")
+//    public String verify(@RequestParam String verificationCode) {
+//        return userService.verifyUser(verificationCode);
+//    }
+//
+@PostMapping("/verify")
+public String verify(@RequestBody VerificationRequest1 verificationRequest) {
+    return userService.verifyUser(verificationRequest.getVerificationCode());
+}
     @PostMapping("/complete-profile")
     public User completeProfile( @RequestParam String phoneNumber,@RequestParam String email,@RequestParam String fullName, @RequestParam String password,@RequestParam String usertype) {
         return userService.completeProfile(email,fullName, password,usertype,phoneNumber);
