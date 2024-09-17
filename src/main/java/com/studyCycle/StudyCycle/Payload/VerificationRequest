@@ -1,0 +1,15 @@
+package com.studyCycle.StudyCycle.Payload;
+
+public class VerificationRequest {
+    private String verificationCode;
+
+    // Getter and Setter
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+}
+
