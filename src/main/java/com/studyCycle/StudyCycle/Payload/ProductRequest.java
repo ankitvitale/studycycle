@@ -7,6 +7,12 @@ import java.util.List;
 
 
 public class ProductRequest {
+    public String prod_name;
+    public String description;
+    public List<MultipartFile> prod_image;
+
+    public String category;
+
     public ProductRequest(String prod_name, String description, List<MultipartFile> prod_image, String category) {
         this.prod_name = prod_name;
         this.description = description;
@@ -14,8 +20,6 @@ public class ProductRequest {
         this.category = category;
     }
 
-    public String prod_name;
-    public String description;
 
     public List<MultipartFile> getProd_image() {
         return prod_image;
@@ -25,9 +29,7 @@ public class ProductRequest {
         this.prod_image = prod_image;
     }
 
-    public List<MultipartFile> prod_image;
 
-    public String category;
 
     public String getProd_name() {
         return prod_name;

@@ -54,46 +54,46 @@ public class SellController {
 //    }
 
 
-//    @PostMapping("/addSellProduct")
-//    @PreAuthorize("hasRole('User')")
-//    public ResponseEntity<Sell> addSellProduct(@RequestParam("product") String productJson,
-//                                               @RequestParam("cost") Double cost,
-//                                               @RequestParam("type") String type,
-//                                               @RequestParam("quantity") int quantity,
-//                                               @RequestParam("prod_image") List<MultipartFile> prodImages) {
-//        try {
-//            // Parse product JSON
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            ProductRequest productRequest = objectMapper.readValue(productJson, ProductRequest.class);
-//
-//            // Upload images and get URLs
-//            List<String> imageUrls = new ArrayList<>();
-//            for (MultipartFile image : prodImages) {
-//                String imageUrl = categoryService.uploadFile(image);
-//                imageUrls.add(imageUrl);
-//            }
-//
-//            // Set image URLs and other details
-//            productRequest.setProd_image(prodImages);
-////            productRequest.set(cost);
-////            productRequest.setType(type);
-//
-//            // Create SellProductRequest and save the product
-//            SellProductRequest sellProductRequest = new SellProductRequest(productRequest, cost, type, quantity);
-//            Sell sellProduct = sellService.addSellProduct(sellProductRequest);
-//
-//            return ResponseEntity.ok(sellProduct);
-//        } catch (IOException e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
+    @PostMapping("/addSellProduct")
+    @PreAuthorize("hasRole('User')")
+    public ResponseEntity<Sell> addSellProduct(@RequestParam("product") String productJson,
+                                               @RequestParam("cost") Double cost,
+                                               @RequestParam("type") String type,
+                                               @RequestParam("quantity") int quantity,
+                                               @RequestParam("prod_image") List<MultipartFile> prodImages) {
+        try {
+            // Parse product JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProductRequest productRequest = objectMapper.readValue(productJson, ProductRequest.class);
+
+            // Upload images and get URLs
+            List<String> imageUrls = new ArrayList<>();
+            for (MultipartFile image : prodImages) {
+                String imageUrl = categoryService.uploadFile(image);
+                imageUrls.add(imageUrl);
+            }
+
+            // Set image URLs and other details
+            productRequest.setProd_image(prodImages);
+//            productRequest.set(cost);
+//            productRequest.setType(type);
+
+            // Create SellProductRequest and save the product
+            SellProductRequest sellProductRequest = new SellProductRequest(productRequest, cost, type, quantity);
+            Sell sellProduct = sellService.addSellProduct(sellProductRequest);
+
+            return ResponseEntity.ok(sellProduct);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
 //@PostMapping("/addSellProduct")
 //@PreAuthorize("hasRole('User')")
 //public Sell addSellProduct(@RequestParam("product") String productJson,
 //                                          @RequestParam("cost") Double cost,
 //                                          @RequestParam("type") String type,
-//                                              @RequestParam("quantity") int quantity,
+//                                          @RequestParam("quantity") int quantity,
 //                                          @RequestParam("prod_image") List<MultipartFile> prod_image) throws Exception {
 //    try {
 //        ObjectMapper objectMapper = new ObjectMapper();
@@ -110,11 +110,14 @@ public class SellController {
 //    } catch (Exception e) {
 //        throw new Exception("no");
 //    }
-//}
-    @PostMapping("/addSellProduct")
-    public void addSellProduct(@RequestBody SellProductRequest sellproductRequest ) throws IOException {
-        sellService.addSellProduct(sellproductRequest);
-    }
+////}
+
+
+
+//    @PostMapping("/addSellProduct")
+//    public void addSellProduct(@RequestBody SellProductRequest sellproductRequest ) throws IOException {
+//        sellService.addSellProduct(sellproductRequest);
+//    }
 
     @PostMapping("/updateSellProduct/{id}")
     public void updateSellProduct(@PathVariable("id") Long id,@RequestBody SellProductRequest sellproductRequest) throws IOException {

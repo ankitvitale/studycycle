@@ -104,8 +104,17 @@ UserService {
         if (password == null) {
             throw new IllegalArgumentException("Password cannot be null");
         }
-
         User user = userDao.findByEmail(email);
+
+        if (user != null && !user.isVerified()) {
+            throw new IllegalArgumentException("Email is already registered but the user is not logged in or verified.");
+        } else if (user == null) {
+            // If user does not exist, throw an error or prompt for registration
+            throw new IllegalArgumentException("User with this email does not exist.");
+        }
+
+
+   //     User user = userDao.findByEmail(email);
         if (user != null) {
             user.setFullName(fullName);
        //     user.setAddress(address);

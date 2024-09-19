@@ -19,6 +19,8 @@ import java.util.List;
 
 @RestController("/admin/")
 @PreAuthorize("hasRole('Admin')")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class AdminController {
     @Autowired
     private CategoryRepository categoryRepository;
