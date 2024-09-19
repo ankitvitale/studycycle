@@ -36,7 +36,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/request-password-reset",
             "/verify-reset-code",
             "/reset-password",
-            "/complete-admin"
+            "/complete-admin",
+            "swagger-ui/index.html",
+            "/swagger-ui/*",
+            "/v3/api-docs"
     };
 
     @Autowired

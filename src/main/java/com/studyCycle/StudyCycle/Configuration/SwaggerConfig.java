@@ -14,13 +14,9 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("My API")
+                        .title("Your API Title")
                         .version("1.0.0")
-                        .description("API documentation for my application")
-                        .contact(new Contact()
-                                .name("Your Name")
-                                .url("www.example.com")
-                                .email("your-email@example.com")));
+                        .description("API documentation for your project"));
     }
 }
 

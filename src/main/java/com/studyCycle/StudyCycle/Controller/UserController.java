@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct;
 
 @RestController
 //@RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 
 public class UserController {
 
