@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController("/admin/")
 @PreAuthorize("hasRole('Admin')")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 
 public class AdminController {
     @Autowired
