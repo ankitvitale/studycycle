@@ -94,9 +94,9 @@ public String verify(@RequestBody VerificationRequest1 verificationRequest) {
         return userService.resetPassword(email, resetCode, newPassword);
     }
 
-    // @GetMapping("/search")
-    // public SearchResponse search(@RequestParam String match ){
-    //    return userService.filter(match);
+    @GetMapping("/search")
+    public SearchResponse search(@RequestParam String match ){
+       return userService.filter(match);
     }
 
 //    @PostMapping("/banner")
