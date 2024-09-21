@@ -70,7 +70,7 @@ public class CategoryController {
     }
 
     @GetMapping("/getAllCategory")
-    @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasAnyRole('User', 'Admin')")
     public List<Category> getAllCategory() {
               return categoryService.getAllCategory();
     }
